@@ -1,0 +1,10 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ha.ltschat.mapper.UserMapper">
+    <select id="getUsers" resultType="com.ha.ltschat.model.User">
+        select * from users
+    </select>
+    <select id="findByUuid" parameterType="java.lang.String" resultType="com.ha.ltschat.model.User">
+        select * from users where uuid = #{uuid}
+    </select>
+</mapper>
