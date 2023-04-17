@@ -1,0 +1,11 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ha.ltschat.mapper.CourseMapper">
+    <select id="getCoursesByTeacherUuid" resultType="com.ha.ltschat.model.Course">
+        SELECT c.uuid, c.coursename
+        FROM courses c
+                 INNER JOIN teacher_course tc ON c.uuid = tc.courseid
+        WHERE tc.teacherid = #{uuid}
+    </select>
+
+</mapper>
