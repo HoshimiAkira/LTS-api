@@ -9,4 +9,5 @@ import java.util.List;
 public interface UserMapper {
     List<User> getUsers();
     User findByUuid(@Param("uuid") String uuid);
+    List<User> getStudentsByCourseUuid(@Param("uuid") String uuid);
 }

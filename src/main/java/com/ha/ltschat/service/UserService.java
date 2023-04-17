@@ -16,4 +16,5 @@ public class UserService {
         return userMapper.getUsers();
     }
     public User findByUuid(String uuid){return userMapper.findByUuid(uuid);}
+    public List<User> getStudentsByCourseUuid(String uuid){return userMapper.getStudentsByCourseUuid(uuid);}
 }

@@ -49,6 +49,7 @@ public class LoginController {
                 response.put("token", jwtUtil.generateJwtToken(user.getUserName(), type));
                 response.put("username", user.getUserName());
                 response.put("type", type);
+
                 response.put("uuid", user.getUuid());
                 return ResponseEntity.ok(response);
             }

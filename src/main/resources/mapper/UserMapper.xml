@@ -7,4 +7,10 @@
     <select id="findByUuid" parameterType="java.lang.String" resultType="com.ha.ltschat.model.User">
         select * from users where uuid = #{uuid}
     </select>
+    <select id="getStudentsByCourseUuid" resultType="com.ha.ltschat.model.User">
+        SELECT u.uuid, u.username,u.major
+        FROM users u
+                 INNER JOIN student_course sc ON u.uuid = sc.studentid
+        WHERE sc.courseid = #{uuid}
+    </select>
 </mapper>
