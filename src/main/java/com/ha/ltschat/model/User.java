@@ -5,7 +5,7 @@ public class User {
     private String userName;
     private String password;
     private int type;
-
+    private String major;
     public String getUuid() {
         return uuid;
     }
@@ -38,6 +38,14 @@ public class User {
         this.type = type;
     }
 
+    public String getMajor() {
+        return major;
+    }
+
+    public void setMajor(String major) {
+        this.major = major;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -45,6 +53,7 @@ public class User {
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
                 ", type=" + type +
+                ", major='" + major + '\'' +
                 '}';
     }
 }

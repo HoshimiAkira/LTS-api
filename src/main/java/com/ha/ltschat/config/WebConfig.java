@@ -11,7 +11,8 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry){
-        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/test");
+        registry.addInterceptor(new LoginInterceptor())
+                .addPathPatterns("/admin/**");
     }
     @Override
     public void addCorsMappings(CorsRegistry registry) {
