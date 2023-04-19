@@ -6,11 +6,9 @@ import com.ha.ltschat.service.CourseService;
 import com.ha.ltschat.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,10 +32,21 @@ public class GroupController {
         return ResponseEntity.ok(courses);
     }
     @GetMapping("/admin/courses/{uuid}")
-    public ResponseEntity<Map<String, Object>> getGroupInfo(@PathVariable("uuid") String uuid) {
-        List<User> students=courseService.getStudentsByCourseUuid(uuid);
+    public ResponseEntity<List<Map<String, Object>>> getGroupInfo(@PathVariable("uuid") String uuid) {
+        List<User> students=userService.getStudentsByCourseUuid(uuid);
+        List<User> teachers=userService.getTeachersByCourseUuid(uuid);
         Map<String, Object> response = new HashMap<>();
-        response.put("students", students);
+        response.put("students",students);
+        response.put("teachers",teachers);
+        List<Map<String, Object>> responseList=new ArrayList<>();
+        responseList.add(response);
+        return ResponseEntity.ok(responseList);
+    }
+    @DeleteMapping("/admin/courses/{cUuid}/{sUuid}")
+    public ResponseEntity<Map<String, Object>> deleteStudent(@PathVariable("cUuid") String cUuid,@PathVariable("sUuid") String sUuid) {
+        String message=userService.deleteStudentByUuid(cUuid,sUuid);
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", message);
         return ResponseEntity.ok(response);
     }
 

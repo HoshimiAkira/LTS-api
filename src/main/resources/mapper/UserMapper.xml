@@ -13,4 +13,14 @@
                  INNER JOIN student_course sc ON u.uuid = sc.studentid
         WHERE sc.courseid = #{uuid}
     </select>
+    <select id="getTeachersByCourseUuid" resultType="com.ha.ltschat.model.User">
+        SELECT u.uuid, u.username,u.major
+        FROM users u
+                 INNER JOIN teacher_course tc ON u.uuid = tc.teacherid
+        WHERE tc.courseid = #{uuid}
+    </select>
+    <delete id="deleteStudentByUuid">
+        DELETE FROM student_course
+        WHERE courseid = #{cUuid} AND studentid = #{sUuid}
+    </delete>
 </mapper>

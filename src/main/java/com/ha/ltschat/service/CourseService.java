@@ -19,7 +19,5 @@ public class CourseService {
     public List<Course> getCoursesByTeacherUuid(String uuid){
         return courseMapper.getCoursesByTeacherUuid(uuid);
     }
-    public List<User> getStudentsByCourseUuid(String uuid){
-        return userService.getStudentsByCourseUuid(uuid);
-    }
+
 }

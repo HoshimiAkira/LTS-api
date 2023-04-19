@@ -17,4 +17,21 @@ public class UserService {
     }
     public User findByUuid(String uuid){return userMapper.findByUuid(uuid);}
     public List<User> getStudentsByCourseUuid(String uuid){return userMapper.getStudentsByCourseUuid(uuid);}
+    public List<User> getTeachersByCourseUuid(String uuid){return userMapper.getTeachersByCourseUuid(uuid);}
+    public String deleteStudentByUuid(String cUuid,String sUuid){
+        String message=null;
+        try {
+            int num=userMapper.deleteStudentByUuid(cUuid,sUuid);
+            if(num<=0){
+                message="Delete fail! Nothing be deleted.";
+            }else{
+                message="Delete success";
+            }
+        }catch(Exception e){
+            message="Delete fail! Special error";
+            return message;
+        }
+
+        return message;
+    }
 }

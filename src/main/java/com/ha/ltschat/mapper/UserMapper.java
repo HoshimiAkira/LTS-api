@@ -10,4 +10,6 @@ public interface UserMapper {
     List<User> getUsers();
     User findByUuid(@Param("uuid") String uuid);
     List<User> getStudentsByCourseUuid(@Param("uuid") String uuid);
+    List<User> getTeachersByCourseUuid(@Param("uuid") String uuid);
+    int deleteStudentByUuid(@Param("cUuid") String cUuid,@Param("sUuid") String sUuid);
 }
