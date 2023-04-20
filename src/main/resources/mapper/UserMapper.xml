@@ -4,6 +4,9 @@
     <select id="getUsers" resultType="com.ha.ltschat.model.User">
         select * from users
     </select>
+    <select id="getStudentsByName" resultType="com.ha.ltschat.model.User">
+        select * from users where LOWER(username) like LOWER(concat('%', #{name}, '%')) AND type = 0
+    </select>
     <select id="findByUuid" parameterType="java.lang.String" resultType="com.ha.ltschat.model.User">
         select * from users where uuid = #{uuid}
     </select>
@@ -19,6 +22,13 @@
                  INNER JOIN teacher_course tc ON u.uuid = tc.teacherid
         WHERE tc.courseid = #{uuid}
     </select>
+    <insert id="addStudents" parameterType="map">
+        INSERT INTO student_course (studentid, courseid)
+        VALUES
+        <foreach collection="uuidList" item="uuid" separator=",">
+            (#{uuid}, #{courseUuid})
+        </foreach>
+    </insert>
     <delete id="deleteStudentByUuid">
         DELETE FROM student_course
         WHERE courseid = #{cUuid} AND studentid = #{sUuid}

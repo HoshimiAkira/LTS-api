@@ -25,6 +25,11 @@ public class GroupController {
         List<User> users=userService.getUsers();
         return ResponseEntity.ok(users);
     }
+    @GetMapping("/admin/courses/students")
+    public ResponseEntity<List<User>> getStudentsByName(@RequestParam("name") String name) {
+        List<User> users=userService.getStudentsByName(name);
+        return ResponseEntity.ok(users);
+    }
 
     @GetMapping("/admin/courses")
     public ResponseEntity<List<Course>> getGroups(@RequestParam("uuid") String uuid) {
@@ -41,6 +46,13 @@ public class GroupController {
         List<Map<String, Object>> responseList=new ArrayList<>();
         responseList.add(response);
         return ResponseEntity.ok(responseList);
+    }
+    @PostMapping("/admin/courses/students")
+    public ResponseEntity<Map<String, Object>> addStudents(@RequestParam("uuidList") List<String> uuidList,@RequestParam("courseUuid") String courseUuid) {
+        String message=userService.addStudents(uuidList,courseUuid);
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", message);
+        return ResponseEntity.ok(response);
     }
     @DeleteMapping("/admin/courses/{cUuid}/{sUuid}")
     public ResponseEntity<Map<String, Object>> deleteStudent(@PathVariable("cUuid") String cUuid,@PathVariable("sUuid") String sUuid) {

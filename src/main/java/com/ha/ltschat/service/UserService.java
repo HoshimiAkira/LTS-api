@@ -15,6 +15,9 @@ public class UserService {
     public List<User> getUsers() {
         return userMapper.getUsers();
     }
+    public List<User> getStudentsByName(String name){
+        return userMapper.getStudentsByName(name);
+    }
     public User findByUuid(String uuid){return userMapper.findByUuid(uuid);}
     public List<User> getStudentsByCourseUuid(String uuid){return userMapper.getStudentsByCourseUuid(uuid);}
     public List<User> getTeachersByCourseUuid(String uuid){return userMapper.getTeachersByCourseUuid(uuid);}
@@ -31,6 +34,15 @@ public class UserService {
             message="Delete fail! Special error";
             return message;
         }
+
+        return message;
+    }
+    public String addStudents(List<String> uuidList,String courseUuid){
+        String message=null;
+
+            userMapper.addStudents(uuidList,courseUuid);
+            message="Add success";
+
 
         return message;
     }
