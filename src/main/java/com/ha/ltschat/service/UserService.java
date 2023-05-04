@@ -78,4 +78,26 @@ public class UserService {
     public void deleteTeachersInCourse(String uuid){
         userMapper.deleteTeachersInCourse(uuid);
     }
+
+    public String updatePassword(String uuid,String password){
+        String message=null;
+        int num=userMapper.updatePassword(uuid,password);
+        if(num<=0){
+            message="Update fail! Nothing be updated.";
+        }else{
+            message="Update success";
+        }
+
+        return message;
+    }
+    public String updateIcon(String uuid,String icon){
+        String message=null;
+        int num=userMapper.updateIcon(uuid,icon);
+        if(num<=0){
+            message="Update fail! Nothing be updated.";
+        }else{
+            message="Update success";
+        }
+        return message;
+    }
 }

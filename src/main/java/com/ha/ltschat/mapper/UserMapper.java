@@ -21,4 +21,8 @@ public interface UserMapper {
 
     int deleteStudentsInCourse(@Param("uuid") String uuid);
     int deleteTeachersInCourse(@Param("uuid") String uuid);
+
+    int updatePassword(@Param("uuid") String uuid,@Param("password") String password);
+
+    int updateIcon(@Param("uuid") String uuid,@Param("icon") String icon);
 }

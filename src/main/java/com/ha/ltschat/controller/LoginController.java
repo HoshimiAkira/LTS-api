@@ -14,11 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.ha.ltschat.util.Md5Util.encode;
+
 import com.ha.ltschat.util.JwtUtil;
 @RestController
 public class LoginController {
-    JwtUtil jwtUtil = new JwtUtil();
+    @Autowired
+    JwtUtil jwtUtil;
+    @Autowired
+    Md5Util md5Util;
 
     @Autowired
     private LoginService loginService;
@@ -28,7 +31,7 @@ public class LoginController {
 
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> login(@RequestParam("uuid") String uuid, @RequestParam("password") String password) {
-        password= encode(password);
+        password= md5Util.encode(password);
         User user = userService.findByUuid(uuid);
         if (user == null) {
             Map<String, Object> response = new HashMap<>();
@@ -49,7 +52,7 @@ public class LoginController {
                 response.put("token", jwtUtil.generateJwtToken(user.getUserName(), type));
                 response.put("username", user.getUserName());
                 response.put("type", type);
-
+                response.put("icon",user.getIcon());
                 response.put("uuid", user.getUuid());
                 return ResponseEntity.ok(response);
             }

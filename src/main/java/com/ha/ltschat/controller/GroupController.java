@@ -59,7 +59,7 @@ public class GroupController {
         try {
              message = userService.addStudents(uuidList, courseUuid);
         }catch(Exception e){
-            message="Add Fail!";
+            message=e.toString();
             Map<String, Object> response = new HashMap<>();
             response.put("message", message);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
@@ -74,7 +74,7 @@ public class GroupController {
         try {
             message = userService.addTeachers(uuidList, courseUuid);
         }catch(Exception e){
-            message="Add Fail!Please update data.";
+            message=e.toString();
             Map<String, Object> response = new HashMap<>();
             response.put("message", message);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
@@ -113,7 +113,7 @@ public class GroupController {
                 }
             }
         }catch(Exception e){
-            message="Delete Fail!Please update data.";
+            message=e.toString();
             Map<String, Object> response = new HashMap<>();
             response.put("message", message);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
@@ -133,7 +133,7 @@ public class GroupController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }
         }catch(Exception e){
-            message="Delete Fail!Please update data.";
+            message=e.toString();
             Map<String, Object> response = new HashMap<>();
             response.put("message", message);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
@@ -154,7 +154,7 @@ public class GroupController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }
         }catch(Exception e){
-            message="Update Fail!Please update data.";
+            message=e.toString();
             Map<String, Object> response = new HashMap<>();
             response.put("message", message);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
@@ -174,7 +174,7 @@ public class GroupController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }
         }catch(Exception e){
-            message="Add Fail!Please update data.";
+            message=e.toString();
             Map<String, Object> response = new HashMap<>();
             response.put("message", message);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);

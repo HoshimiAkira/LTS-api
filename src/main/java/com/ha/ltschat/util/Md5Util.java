@@ -1,6 +1,9 @@
 package com.ha.ltschat.util;
+import org.springframework.stereotype.Component;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+@Component
 public class Md5Util {
     public static String encode(String input) {
         try {

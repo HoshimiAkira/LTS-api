@@ -59,4 +59,10 @@
         DELETE FROM teacher_course
         WHERE courseid = #{uuid}
     </delete>
+    <update id="updatePassword">
+        UPDATE users SET password=#{password} WHERE uuid=#{uuid}
+    </update>
+    <update id="updateIcon">
+        UPDATE users SET icon=#{icon} WHERE uuid=#{uuid}
+    </update>
 </mapper>

@@ -1,7 +1,9 @@
 package com.ha.ltschat.util;
 
-import java.util.UUID;
+import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+@Component
 public class UuidUtil {
     public static String generateUuid(int length) {
         String uuid = UUID.randomUUID().toString().replace("-", "");

@@ -7,7 +7,11 @@ import org.springframework.beans.factory.annotation.Value;
 import javax.crypto.SecretKey;
 
 import java.util.Date;
+
 import io.jsonwebtoken.security.Keys;
+import org.springframework.stereotype.Component;
+
+@Component
 public class JwtUtil {
 
     private String jwtSecret="abcdfghia0bcdfghiabcd1fghiabcdfghizuynmobtuop";

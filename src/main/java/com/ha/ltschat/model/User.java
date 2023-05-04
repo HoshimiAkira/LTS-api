@@ -1,11 +1,14 @@
 package com.ha.ltschat.model;
 
+import java.util.Arrays;
+
 public class User {
     private String uuid;
     private String userName;
     private String password;
     private int type;
     private String major;
+    private String icon;
     public String getUuid() {
         return uuid;
     }
@@ -46,6 +49,14 @@ public class User {
         this.major = major;
     }
 
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -54,6 +65,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", type=" + type +
                 ", major='" + major + '\'' +
+                ", icon='" + icon + '\'' +
                 '}';
     }
 }
