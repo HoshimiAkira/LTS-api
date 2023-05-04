@@ -2,10 +2,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ha.ltschat.mapper.CourseMapper">
     <select id="getCoursesByTeacherUuid" resultType="com.ha.ltschat.model.Course">
-        SELECT c.uuid, c.coursename
+        SELECT *
         FROM courses c
                  INNER JOIN teacher_course tc ON c.uuid = tc.courseid
         WHERE tc.teacherid = #{uuid}
     </select>
-
+    <delete id="deleteCourseByUuid">
+        DELETE FROM courses
+        WHERE uuid = #{uuid}
+    </delete>
+    <update id="updateInvite">
+        UPDATE courses SET invite=#{invite} WHERE uuid=#{uuid}
+    </update>
+    <insert id="addCourse" parameterType="map">
+        INSERT INTO courses (uuid, coursename, invite)
+        VALUES (#{uuid}, #{name},"default")
+    </insert>
 </mapper>

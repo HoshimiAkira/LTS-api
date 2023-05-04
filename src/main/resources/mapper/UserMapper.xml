@@ -7,6 +7,9 @@
     <select id="getStudentsByName" resultType="com.ha.ltschat.model.User">
         select * from users where LOWER(username) like LOWER(concat('%', #{name}, '%')) AND type = 0
     </select>
+    <select id="getTeachersByName" resultType="com.ha.ltschat.model.User">
+        select * from users where LOWER(username) like LOWER(concat('%', #{name}, '%')) AND type = 1
+    </select>
     <select id="findByUuid" parameterType="java.lang.String" resultType="com.ha.ltschat.model.User">
         select * from users where uuid = #{uuid}
     </select>
@@ -29,8 +32,31 @@
             (#{uuid}, #{courseUuid})
         </foreach>
     </insert>
+    <insert id="addTeachers" parameterType="map">
+        INSERT INTO teacher_course (teacherid, courseid)
+        VALUES
+        <foreach collection="uuidList" item="uuid" separator=",">
+            (#{uuid}, #{courseUuid})
+        </foreach>
+    </insert>
     <delete id="deleteStudentByUuid">
         DELETE FROM student_course
         WHERE courseid = #{cUuid} AND studentid = #{sUuid}
+    </delete>
+    <delete id="deleteTeacherByUuid">
+        DELETE FROM teacher_course
+        WHERE courseid = #{cUuid} AND teacherid = #{tUuid}
+    </delete>
+    <select id="getTeacherNum" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM teacher_course
+        WHERE courseid = #{cUuid}
+    </select>
+    <delete id="deleteStudentsInCourse">
+        DELETE FROM student_course
+        WHERE courseid = #{uuid}
+    </delete>
+    <delete id="deleteTeachersInCourse">
+        DELETE FROM teacher_course
+        WHERE courseid = #{uuid}
     </delete>
 </mapper>
