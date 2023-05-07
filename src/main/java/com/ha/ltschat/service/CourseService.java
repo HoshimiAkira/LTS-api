@@ -23,6 +23,10 @@ public class CourseService {
     public List<Course> getCoursesByTeacherUuid(String uuid){
         return courseMapper.getCoursesByTeacherUuid(uuid);
     }
+    public List<Course> getCoursesByStudentUuid(String uuid){
+        return courseMapper.getCoursesByStudentUuid(uuid);
+    }
+
     public String deleteCourseByUuid(String uuid){
         String message=null;
             int num=courseMapper.deleteCourseByUuid(uuid);

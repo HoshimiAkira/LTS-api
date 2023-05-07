@@ -13,7 +13,10 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry){
         registry.addInterceptor(new LoginInterceptor())
                 .addPathPatterns("/admin/**")
-                .addPathPatterns("/user/**");
+                .addPathPatterns("/user/**")
+                .addPathPatterns("/group/**")
+                .addPathPatterns("/msg/**")
+        ;
     }
     @Override
     public void addCorsMappings(CorsRegistry registry) {

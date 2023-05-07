@@ -4,6 +4,7 @@ public class Course {
     private String uuid;
     private String courseName;
     private String invite;
+    private String status="off";
     public String getUuid() {
         return uuid;
     }
@@ -28,12 +29,21 @@ public class Course {
         this.invite = invite;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "Course{" +
                 "uuid='" + uuid + '\'' +
                 ", courseName='" + courseName + '\'' +
                 ", invite='" + invite + '\'' +
+                ", status='" + status + '\'' +
                 '}';
     }
 }

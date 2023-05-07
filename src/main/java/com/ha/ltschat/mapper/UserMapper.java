@@ -25,4 +25,9 @@ public interface UserMapper {
     int updatePassword(@Param("uuid") String uuid,@Param("password") String password);
 
     int updateIcon(@Param("uuid") String uuid,@Param("icon") String icon);
+    User checkTeacher(@Param("uuid")String uuid,@Param("course")String course);
+    User checkStudent(@Param("uuid")String uuid,@Param("uuid")String course);
+    void addUser(@Param("uuid")String uuid,@Param("userName")String userName,@Param("password")String password,
+                 @Param("type")int type,@Param("major")String major,@Param("icon")String icon);
+    int updateInfo(@Param("uuid") String uuid,@Param("major") String major,@Param("userName") String userName);
 }

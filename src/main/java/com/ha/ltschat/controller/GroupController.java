@@ -1,7 +1,9 @@
 package com.ha.ltschat.controller;
 
+import com.ha.ltschat.config.MyHandler;
 import com.ha.ltschat.model.Course;
 import com.ha.ltschat.model.User;
+import com.ha.ltschat.model.Watch;
 import com.ha.ltschat.service.CourseService;
 import com.ha.ltschat.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 public class GroupController {
@@ -20,6 +19,8 @@ public class GroupController {
     private UserService userService;
     @Autowired
     private CourseService courseService;
+    @Autowired
+    private MyHandler myHandler;
 
     @GetMapping("/admin/users")
     public ResponseEntity<List<User>> getUsers() {
@@ -39,7 +40,13 @@ public class GroupController {
 
     @GetMapping("/admin/courses")
     public ResponseEntity<List<Course>> getGroups(@RequestParam("uuid") String uuid) {
-        List<Course> courses=courseService.getCoursesByTeacherUuid(uuid);
+        User user= userService.findByUuid(uuid);
+        List<Course> courses =new ArrayList<>();
+        if(user.getType()==1) {
+            courses = courseService.getCoursesByTeacherUuid(uuid);
+        }else{
+            courses = courseService.getCoursesByStudentUuid(uuid);
+        }
         return ResponseEntity.ok(courses);
     }
     @GetMapping("/admin/courses/{uuid}")

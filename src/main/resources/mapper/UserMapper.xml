@@ -1,6 +1,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ha.ltschat.mapper.UserMapper">
+    <insert id="addUser" parameterType="map">
+        INSERT INTO users (uuid,username,password,type,major,icon)
+        VALUES
+
+            (#{uuid}, #{userName}, #{password}, #{type}, #{major}, #{icon})
+
+    </insert>
     <select id="getUsers" resultType="com.ha.ltschat.model.User">
         select * from users
     </select>
@@ -13,14 +20,26 @@
     <select id="findByUuid" parameterType="java.lang.String" resultType="com.ha.ltschat.model.User">
         select * from users where uuid = #{uuid}
     </select>
+    <select id="checkStudent" resultType="com.ha.ltschat.model.User">
+        SELECT u.uuid, u.username,u.major,u.icon
+        FROM users u
+                 INNER JOIN student_course sc ON u.uuid = sc.studentid
+        WHERE sc.courseid = #{course} AND u.uuid=#{uuid}
+    </select>
+    <select id="checkTeacher" resultType="com.ha.ltschat.model.User">
+        SELECT u.uuid, u.username,u.major,u.icon
+        FROM users u
+                 INNER JOIN teacher_course tc ON u.uuid = tc.teacherid
+        WHERE tc.courseid = #{course} AND u.uuid=#{uuid}
+    </select>
     <select id="getStudentsByCourseUuid" resultType="com.ha.ltschat.model.User">
-        SELECT u.uuid, u.username,u.major
+        SELECT u.uuid, u.username,u.major,u.icon
         FROM users u
                  INNER JOIN student_course sc ON u.uuid = sc.studentid
         WHERE sc.courseid = #{uuid}
     </select>
     <select id="getTeachersByCourseUuid" resultType="com.ha.ltschat.model.User">
-        SELECT u.uuid, u.username,u.major
+        SELECT u.uuid, u.username,u.major,u.icon
         FROM users u
                  INNER JOIN teacher_course tc ON u.uuid = tc.teacherid
         WHERE tc.courseid = #{uuid}
@@ -64,5 +83,8 @@
     </update>
     <update id="updateIcon">
         UPDATE users SET icon=#{icon} WHERE uuid=#{uuid}
+    </update>
+    <update id="updateInfo">
+        UPDATE users SET userName=#{userName},major=#{major} WHERE uuid=#{uuid}
     </update>
 </mapper>

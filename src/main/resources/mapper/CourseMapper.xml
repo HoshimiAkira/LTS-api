@@ -7,6 +7,17 @@
                  INNER JOIN teacher_course tc ON c.uuid = tc.courseid
         WHERE tc.teacherid = #{uuid}
     </select>
+    <select id="getCourseByUuid" resultType="com.ha.ltschat.model.Course">
+        SELECT *
+        FROM courses c
+        WHERE c.uuid = #{uuid}
+    </select>
+    <select id="getCoursesByStudentUuid" resultType="com.ha.ltschat.model.Course">
+        SELECT *
+        FROM courses c
+                 INNER JOIN student_course sc ON c.uuid = sc.courseid
+        WHERE sc.studentid = #{uuid}
+    </select>
     <delete id="deleteCourseByUuid">
         DELETE FROM courses
         WHERE uuid = #{uuid}

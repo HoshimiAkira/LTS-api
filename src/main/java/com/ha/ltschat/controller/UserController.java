@@ -70,7 +70,8 @@ public class UserController {
             byte[] icon = file.getBytes();
             String originalFilename = file.getOriginalFilename();
             String extension = "." + FilenameUtils.getExtension(originalFilename);
-            String newFilename = uuid + "img" + extension;
+            String iconId=uuidUtil.generateUuid(10);
+            String newFilename = iconId + extension;
             azureBlobStorageService.uploadFile(newFilename, icon);
             String imageUrl = newFilename;
             message = userService.updateIcon(uuid, imageUrl);
@@ -90,5 +91,52 @@ public class UserController {
         response.put("message", message);
         return ResponseEntity.ok(response);
     }
+    @PostMapping("/user/group")
+    public ResponseEntity<Map<String, Object>> addGroup(@RequestParam("uuid") String uuid,@RequestParam("course") String course,
+                                                        @RequestParam("type") String type,@RequestParam("invite") String invite
+    ) {
+        String message=null;
+        try {
+           message=userService.addGroup(uuid,course,type,invite);
+            if(message!="Add success"){
+                Map<String, Object> response = new HashMap<>();
+                response.put("message", message);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            }
+        }
+        catch(Exception e){
+            message=e.toString();
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", message);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", message);
+        return ResponseEntity.ok(response);
+    }
+    @PostMapping("/user/edit")
+    public ResponseEntity<Map<String, Object>> editInfo(@RequestParam("uuid") String uuid,@RequestParam("major") String major,
+                                                        @RequestParam("userName") String userName
+    ) {
+        String message=null;
+        try {
+            message=userService.editInfo(uuid,major,userName);
+            if(message!="Add success"){
+                Map<String, Object> response = new HashMap<>();
+                response.put("message", message);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            }
+        }
+        catch(Exception e){
+            message=e.toString();
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", message);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", message);
+        return ResponseEntity.ok(response);
+    }
+
 
 }

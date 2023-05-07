@@ -1,0 +1,83 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ha.ltschat.mapper.MsgMapper">
+    <insert id="addMsg" parameterType="map">
+        INSERT INTO msgs (title,uuid,previous,receive,send,urgency,major,content,date,status,course)
+        VALUES(#{title},#{uuid}, #{previous},#{receive},#{send},#{urgency},#{major},#{content},#{date},#{status},#{course})
+    </insert>
+    <insert id="addMsgIcon" parameterType="map">
+        INSERT INTO msg_icon (msgid,iconid)
+        VALUES(#{uuid}, #{icon})
+    </insert>
+    <select id="getUnreadMsgs" resultType="com.ha.ltschat.model.Msg">
+        select m.*, u.icon, u.username
+        from msgs m
+                 INNER JOIN users u ON u.uuid = m.send
+        where m.receive=#{uuid} AND m.status = 'not'
+        ORDER BY m.date DESC
+    </select>
+    <select id="getReadMsgs" resultType="com.ha.ltschat.model.Msg">
+        select m.*, u.icon, u.username
+        from msgs m
+                 INNER JOIN users u ON u.uuid = m.send
+        where m.receive=#{uuid} AND m.status != 'not'
+        ORDER BY m.date DESC
+    </select>
+    <select id="getNotice" resultType="com.ha.ltschat.model.Msg">
+        select *
+        from msgs m
+        where m.course=#{uuid} AND m.receive = 'undefined'
+        ORDER BY m.date DESC
+    </select>
+    <select id="getSentMsgs" resultType="com.ha.ltschat.model.Msg">
+        select m.*, u.icon, u.username
+        from msgs m
+                 INNER JOIN users u ON u.uuid = m.receive
+        where m.send=#{uuid}
+        ORDER BY m.date DESC
+    </select>
+    <update id="reply">
+        UPDATE msgs SET status='had' WHERE uuid=#{uuid}
+    </update>
+    <select id="getMsgByUuid" resultType="com.ha.ltschat.model.Msg">
+        select * from msgs where uuid=#{uuid}
+    </select>
+    <select id="checkUnreadNum" resultType="java.lang.Integer">
+        select COUNT(*)
+        from msgs m
+        where m.receive=#{uuid} AND m.status = 'not'
+    </select>
+    <update id="endMsg">
+        UPDATE msgs SET status='end' WHERE uuid=#{uuid}
+    </update>
+    <update id="cleanPrevious">
+        UPDATE msgs SET previous='null' WHERE previous=#{uuid}
+    </update>
+    <delete id="deleteMsg">
+        DELETE FROM msgs
+        WHERE uuid = #{uuid}
+    </delete>
+    <insert id="saveMsg" parameterType="map">
+        INSERT INTO bot (uuid,previous,answer,course)
+        VALUES(#{uuid}, #{previous},#{answer},#{course})
+    </insert>
+
+    <select id="getAnswers" resultType="com.ha.ltschat.model.Msg">
+        select m.*
+        from msgs m
+                 INNER JOIN courses c ON c.uuid = m.course
+                 INNER JOIN bot b ON b.answer = m.uuid
+        where b.course=#{uuid}
+        ORDER BY m.date DESC
+    </select>
+    <select id="getQuestion" resultType="com.ha.ltschat.model.Msg">
+        select m.*
+        from msgs m
+                 INNER JOIN bot b ON b.previous = m.uuid
+        where m.uuid=#{uuid}
+        ORDER BY m.date DESC
+    </select>
+    <delete id="deleteOld">
+        DELETE FROM bot
+    </delete>
+</mapper>
